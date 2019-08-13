@@ -104,11 +104,16 @@
     // ======================================================
     function createUsername(name) {
         let collection;
+        console.log(collection);
         if (name.includes(" ")) {
             collection = name.split(" ");
+            console.log(collection);
+
         }
         else {
             collection = [name]
+            console.log(collection);
+
         }
 
         for (let i = 0; i < collection.length; i++) {
