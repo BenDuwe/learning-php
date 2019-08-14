@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    </head>
-<body class="bg-light">
     <?php
         $strings = array(
             "Kirito",
@@ -29,6 +27,8 @@
             "https://www.hdwallpaper.nu/wp-content/uploads/2016/02/golden-gate_wallpaper_030.jpg"
         );
     ?>
+    </head>
+<body class="bg-light">
 <header id="header" style="background-image: url(<?php echo $pictures[rand(0,count($pictures)-1)] ?>)">
     <div class="overlay"></div>
     <div class="overlay-content">
@@ -50,7 +50,7 @@
                 <?php
                     $compare = "begin";
                     $randStrings;
-                    
+                
                     while ($compare !== []){
                         $randStrings[] = $strings[rand(0,count($strings)-1)];
                         $compare = array_diff($strings, $randStrings);
@@ -68,12 +68,53 @@
 
         <div class="row">
             <div class="col-12">
-                <div id="username-generator" class="my-4 p-4 bg-white shadow-sm border"></div>
+                <div id="username-generator" class="my-4 p-4 bg-white shadow-sm border">
+                    <?php
+                        createUsername("Rafael Lambelin Selene Nijst");
+                    ?>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
+<?php
+    function createUsername($name){
+    $collection = explode(" ", $name);
+    // print_r($collection);
+    // echo "</br>";
+    foreach ($collection as $val){
+        $letters = str_split($val);
+        // print_r($letters);
+        // echo "</br>";
+        for ($l = 0 ; $l < count($letters)/2 ; $l++){
+            $x = rand(1, count($letters)-1);
+            // echo $x;
+            // echo "</br>";
+            $letters[$x] = strtoupper($letters[$x]);
+            // print_r($letters[$x]);
+            // echo "</br>";
+            $letters[$x] = addRandomColorSpan($letters[$x]);
+        };
+        $letters = implode("",$letters);
+        $newCollection[] = $letters;
+        // print_r($newCollection);
+        // echo "</br>";
+    
+    };
+
+    echo "<p>";
+    echo implode(" - ", $newCollection);
+    echo "</p>";
+    };
+    
+    function addRandomColorSpan($char){
+        $r = rand(0,255);
+        $g = rand(0,255);
+        $b = rand(0,255);
+        return "<span style='color:rgb($r,$g,$b);'>$char</span>";
+    };
+?>
 
 </body>
 </html>
