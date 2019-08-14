@@ -118,6 +118,7 @@
 
         for (let i = 0; i < collection.length; i++) {
             collection[i] = collection[i].split("");
+            console.log(collection[i]);
             for (let ii = 0; ii < collection[i].length/2; ii++) {
                 let x = getRandomNumber(collection[i].length - 1) + 1;
                 collection[i][x] = addRandomColorSpan(collection[i][x].toUpperCase());

@@ -29,7 +29,7 @@
             "https://www.hdwallpaper.nu/wp-content/uploads/2016/02/golden-gate_wallpaper_030.jpg"
         );
     ?>
-<header id="header" style="background-image: url(<?php echo $pictures[rand(0,4)] ?>)">
+<header id="header" style="background-image: url(<?php echo $pictures[rand(0,count($pictures)-1)] ?>)">
     <div class="overlay"></div>
     <div class="overlay-content">
         <div class="container">
@@ -52,7 +52,7 @@
                     $randStrings;
                     
                     while ($compare !== []){
-                        $randStrings[] = $strings[rand(0,8)];
+                        $randStrings[] = $strings[rand(0,count($strings)-1)];
                         $compare = array_diff($strings, $randStrings);
                     };
                     echo "<h2>Exercise 1: Loops and stuff</h2>\n";
