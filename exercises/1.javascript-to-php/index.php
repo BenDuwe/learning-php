@@ -70,7 +70,7 @@
             <div class="col-12">
                 <div id="username-generator" class="my-4 p-4 bg-white shadow-sm border">
                     <?php
-                        createUsername("Rafael Lambelin Selene Nijst");
+                        createUsername("Ben Duwe Gert Vandormael Caroline Schevers Birthe Lambrechts");
                     ?>
                 </div>
             </div>
