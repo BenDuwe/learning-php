@@ -33,6 +33,15 @@ Let's take a look at some of the various ways we know to do this...
 
 > Hint: Look up $_POST (and superglobals)
 
+#### Exercise 1 bonus:
+- Extend the form from `post.php` with the following fields:
+    - Firstname
+    - Lastname
+    - Birthdate
+    - Email-address
+- Manipulate the form data by making the user 10 years older and removing @ and domain from the email-address.
+- Create `transfer.php` and display the data on this page.
+
 
 ### Exercise 2:
 - Create a file, called `get.php`
