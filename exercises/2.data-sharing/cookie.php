@@ -8,9 +8,9 @@
 <body>
     <form id="register" action="" onsubmit="captureData()" method="POST">
         <fieldset id="registerField" class="field">
-            <legend>Registration</legend>
+            <legend>Joke / message:</legend>
             <div>
-                <label for="joke">Insert joke/message here:</label>
+                <label for="joke">Insert joke / message here:</label>
             </div>
             <div>
                 <textarea id="joke" name="joke" cols="40" rows="5"></textarea>
@@ -21,10 +21,12 @@
             </div>
         </fieldset>
     </form>
-    <p>PHP will insert the saved cookie below if the cookie is not empty.</p>
+    <p>After submiting, your text will be saved in a cookie.
+    PHP will insert the saved cookie below after refresching or loading the page in another tab.
+     If the cookie is not empty that is.</p>
     <?php
         if($_COOKIE["joke"]!== ""){
-        echo "<p>".$_COOKIE["joke"]."</p>";
+        echo "<h2>".$_COOKIE["joke"]."</h2>";
         } else {
             echo "";
         };

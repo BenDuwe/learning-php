@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Javascript to PHP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/27e67ac84a.js"></script>
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <?php
@@ -36,7 +37,8 @@
             <div class="row">
                 <div class="col-12 text-center">
                     <h1>Welcome to the Javascript - PHP exercise</h1>
-                    <p>Read the code of this page, understand it, then convert it to the same functionality in PHP!</p>
+                    <p>This is the result of the exercise. Please refresh the page and scroll down to see the effects in action. The HTML with javascript example can be found in the exercise-resources map on GitHub.</p>
+                    <p style="font-size:8rem"><i class="fas fa-angle-down"></i></p>
                 </div>
             </div>
         </div>
@@ -70,7 +72,7 @@
             <div class="col-12">
                 <div id="username-generator" class="my-4 p-4 bg-white shadow-sm border">
                     <?php
-                        createUsername("Ben Duwe Gert Vandormael Caroline Schevers Birthe Lambrechts");
+                        createUsername("Ben Duwé Gert Vandormael Caroline Schevers Birthe Lambrechts");
                     ?>
                 </div>
             </div>
@@ -80,7 +82,7 @@
 
 <?php
     function createUsername($name){
-    $collection = explode(" ", $name);
+    $collection = explode(" ", utf8_decode($name));
     // print_r($collection);
     // echo "</br>";
     foreach ($collection as $val){
@@ -97,7 +99,7 @@
             $letters[$x] = addRandomColorSpan($letters[$x]);
         };
         $letters = implode("",$letters);
-        $newCollection[] = $letters;
+        $newCollection[] = utf8_encode ($letters);
         // print_r($newCollection);
         // echo "</br>";
     
