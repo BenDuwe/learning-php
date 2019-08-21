@@ -116,6 +116,5 @@ echo "Here is the name: " . combineNames();
 
 
 ?>
-
 </body>
 </html>
