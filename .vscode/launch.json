@@ -17,7 +17,7 @@
             "program": "${file}",
             "cwd": "${fileDirname}",
             "port": 8000,
-            "runtimeExecutable":"/usr/bin/php"
+            "runtimeExecutable":"/usr/bin/php",
         }
     ]
 }
