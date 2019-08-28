@@ -1,0 +1,14 @@
+    body {
+        color: grey;
+        height: 95vh;
+        width: 100vw;
+        overflow: auto;
+        background-image: url("../assets/background.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-content: center;
+          
+    }

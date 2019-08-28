@@ -1,14 +1,24 @@
 <?php
 session_start();
 
-$_SESSION["cards"] = ['A',2,3,4,5,6,7,8,9,10,10,10,10];
+$_SESSION["value"] = ['A',2,3,4,5,6,7,8,9,10,'J','Q','K'];
+$_SESSION["suits"] = ['S','C','D','H'];
+$_SESSION["cards"] = [];
+
+function createDeck(){
+    foreach($_SESSION["value"] as &$x){
+        foreach($_SESSION["suits"] as &$y){
+            $_SESSION["cards"][$x.$y] = $x;
+        }
+    }
+}
 
 class Blackjack{
     
     public $score;
     /* ********** Create Random Card  ***********  */
     public function randomCard($active){
-        return $this->aceCheck($active);
+        return $this->cardCheck($active);
     }
     /*  ********** Start Game Player   **********   */
     public function startPlayer(){
@@ -21,39 +31,42 @@ class Blackjack{
     }
 
     public function surrender() {
-        while (array_sum($_SESSION["dealerScore"]) < 15){
-            $_SESSION["dealerScore"][] = $this->aceCheck("dealerScore");
-            if (array_sum($_SESSION["dealerScore"]) >= 15){
+        while (array_sum($_SESSION["dealerScore"]) < 17){
+            $_SESSION["dealerScore"][] = $this->cardCheck("dealerScore");
+            if (array_sum($_SESSION["dealerScore"]) >= 17){
+                $_SESSION["loser"] = true;
+                $this->winDecider();       
                 echo "<div id=dealer>",print_r($_SESSION["dealerScore"],true),"</div><br/>";               
             }
         };
 
-        $_SESSION["loser"] = true;
-        $_SESSION["dealReady"] = true;
-        header("Refresh:0");
+        // $_SESSION["dealReady"] = true;
+        // header("Refresh:0");
 
         // make sure dealer hIT loop runs and shows end result.
     }
 
     function stand(){
-        while (array_sum($_SESSION["dealerScore"]) < 15){
-            $_SESSION["dealerScore"][] = $this->aceCheck("dealerScore");
-            if (array_sum($_SESSION["dealerScore"]) >= 15){
+        while (array_sum($_SESSION["dealerScore"]) < 17){
+            $_SESSION["dealerScore"][] = $this->cardCheck("dealerScore");
+            if (array_sum($_SESSION["dealerScore"]) >= 17){
+                $this->winDecider();
                 echo "<div id=dealer>",print_r($_SESSION["dealerScore"],true),"</div><br/>";               
             }
         };
-        $_SESSION["dealReady"] = true;
-        header("Refresh:0");
+        // $_SESSION["dealReady"] = true;
+        // header("Refresh:0");
 
         // if ($this->score === 'A'){
         //     $this->score = "1 or 11";
         // }
     }
     
-    function aceCheck($active) {
-        $check = $_SESSION["cards"][mt_rand(0,count($_SESSION["cards"])-1)];
+    function cardCheck($active) {
+        $key = array_rand ($_SESSION["cards"],1);
+        $check = $_SESSION["cards"][$key];
+        echo $key."-";
         if ($check === 'A'){
-            echo "ace";
             if(array_sum($_SESSION[$active]) + 11 < 22){
                 $check = 11;
                 return $check;
@@ -61,6 +74,9 @@ class Blackjack{
                 $check = 1;
                 return $check;
             }
+        } else if ($check === 'J' || $check === 'Q' || $check === 'K') {
+            $check = 10;
+            return $check;
         } else {
             return $check;
         }
