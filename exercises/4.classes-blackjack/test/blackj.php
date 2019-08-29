@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+/* ************************* Creating a 52 card deck: ************************ */
+ 
 $_SESSION["value"] = ['A',2,3,4,5,6,7,8,9,'T','J','Q','K'];
 $_SESSION["suits"] = ['S','C','D','H'];
 $_SESSION["cards"];
@@ -12,7 +14,9 @@ function createDeck(){
         }
     }
 }
+/* *************************************************************************** */
 
+/* ******************************* Create class ****************************** */
 class Blackjack{
 
     public $score;
@@ -23,7 +27,7 @@ class Blackjack{
     public function cardCheck() {
         $key = array_rand($_SESSION["cards"],1);
         $check = $_SESSION["cards"][$key];
-        echo $key." ";
+        //echo $key." ";
         unset($_SESSION["cards"][$key]);
         if ($check === 'A'){
             if(array_sum($this->hand) + 11 < 22){
@@ -46,7 +50,7 @@ class Blackjack{
     public function blindCard() {
         $key = array_rand($_SESSION["cards"],1);
         $check = $_SESSION["cards"][$key];
-        echo $key." ";
+        //echo $key." ";
         unset($_SESSION["cards"][$key]);
         if ($check === 'A'){
             if(array_sum($this->hand) + 11 < 22){
@@ -62,7 +66,7 @@ class Blackjack{
 
     public function hitScore(){
         if(array_sum($this->hand)>21){
-            $this->result = "TO GREEDY!";
+            $this->result = " TO GREEDY! ";
             header("Refresh:0");
         };
     }
@@ -77,24 +81,25 @@ class Blackjack{
 
     public function surrender(){
         $this->hand = array_merge($this->hand, $this->blind);
-        $this->result = "PLAYER HAS SURRENDERED!";
+        $this->result = " PLAYER HAS SURRENDERED! ";
         while(array_sum($this->hand) < 17){
             $this->cardCheck();
         }
+        $this->score = array_sum($this->hand);
     }
 
     public function whoWon(){
         $this->score = array_sum($this->hand);
         if($_SESSION["player"]->score > $_SESSION["dealer"]->score || $_SESSION["dealer"]->score > 21 ){
-            $this->result =  " YOU WIN ";
+            $this->result =  " PLAYER WINS ";
         }else if($_SESSION["player"]->score < $_SESSION["dealer"]->score){
             $this->result = " DEALER WINS ";
         }else if($_SESSION["player"]->score === $_SESSION["dealer"]->score){
-            $this->result = " TIE ";
+            $this->result = " TIE! ";
         }
         header("Refresh:0");
     }
 
 }
-
+/* ******************************************************************************* */
 ?>
