@@ -44,6 +44,7 @@ $_SESSION["result"];
     <!--  **********************************************************************  -->
 
     <div>
+    <p>Result:</p>
     <?php 
         echo ($_SESSION["result"]); // shows who won/lost in the end.      
     ?>
@@ -73,12 +74,6 @@ $_SESSION["result"];
         </div>
         <!-- ***************    AREA VOOR FUNCTIE HIT  (NOG AAN TE MAKEN ) ********** -->
         <div class="hitPlayer">
-            <div class="score">
-                <p>SCORE</p>
-                <?php
-                
-            ?>
-            </div>
             <!-- ***************  AREA for Surrender and Stand ***************-->
             <div class="player">
                 <?php 
@@ -98,7 +93,6 @@ $_SESSION["result"];
 
         <form action="home.php" method="post">
             <input type="submit" value="Go Back to Home" name="playGame">
-
         </form>
 
 <?php

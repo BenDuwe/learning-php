@@ -3,7 +3,7 @@ session_start();
 
 $_SESSION["value"] = ['A',2,3,4,5,6,7,8,9,10,'J','Q','K'];
 $_SESSION["suits"] = ['S','C','D','H'];
-$_SESSION["cards"] = [];
+$_SESSION["cards"];
 
 function createDeck(){
     foreach($_SESSION["value"] as &$x){
@@ -66,6 +66,7 @@ class Blackjack{
         $key = array_rand ($_SESSION["cards"],1);
         $check = $_SESSION["cards"][$key];
         echo $key."-";
+        unset($_SESSION["cards"][$key]);
         if ($check === 'A'){
             if(array_sum($_SESSION[$active]) + 11 < 22){
                 $check = 11;
