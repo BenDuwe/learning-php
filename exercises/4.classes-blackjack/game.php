@@ -1,104 +1,101 @@
 <?php
 include 'blackjack.php';
-$player = new Blackjack();
-$dealer = new Blackjack();
-$_SESSION["playerScore"];
-$_SESSION["dealerScore"];
-$_SESSION["result"];
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="css/style.css?<?php echo time(); ?>">
     <title>Blackjack Game</title>
 </head>
 
 <body>
-    <!--  ***************    DEALER AREA  *****************     -->
+    <div class="dealerPos" >
+        <h2 class="center" >Dealer:</h2>
+        <div id="dealer" class="center">
+        <?php
+        // method calls dealer where here.
+        echo "<div>";
+        foreach($_SESSION["dealer"]->hand as $dkey => $value){
+            echo "<img src='assets/cards/".$dkey.".svg' alt='playingcard' height='120px'>";
+        };
+        if(isset($_POST["playGame"]) || isset($_POST["deal"]) || isset($_POST["hitPlayer"])){
+            echo "<img src='assets/cards/2B.svg' alt='playingcard' height='120px'>";
+        }
 
-    <div id="dealer" class="dealer" style="border: 2px solid black; overflow: auto">
-        <p>Dealer</p>
+        echo "</div>";
+        if(isset($_POST["playGame"]) || isset($_POST["deal"])){    
+            $_SESSION["dealer"]->blindCard();
+        }
+        ?>
+        </div>
 
         <?php
-            if(isset($_POST["playGame"])){ // Start: dealer gets two cards, 1 open, 1 closed.
-                createDeck(); // Deck is created in $_SESSION
-                $_SESSION["dealerScore"][] = $dealer->randomCard("dealerScore"); // open card
-                print_r($_SESSION["dealerScore"]); 
-                $_SESSION["closed"] = $dealer->randomCard("dealerScore"); // closed card
-            }else if(isset($_POST["hitPlayer"])){ // needed to keep dealer card visible during hit from player
-                print_r($_SESSION["dealerScore"]);
-              }
-            else  if (isset($_POST["stand"])){ // when player stands dealer takes cards until over 17 total
-                $dealer->stand(); // after reaching a total higher than 17 the winner will be decided
-                var_dump( array_sum($_SESSION["dealerScore"]));
-            }else if (isset($_POST["surrender"])) { // when player surrenders dealer still takes cards until over 17 total, to see what could have been.
-                $dealer->surrender(); // player always loses
-                var_dump( array_sum($_SESSION["dealerScore"]));
-            }
+            echo "<div class='center'>";
+            echo "Dealer hand: ",$_SESSION["dealer"]->score;
+            echo "</div>";
         ?>
     </div>
-    </div>
-    <!--  **********************************************************************  -->
 
-    <div>
-    <p>Result:</p>
-    <?php 
-        echo ($_SESSION["result"]); // shows who won/lost in the end.      
+    <div id="result" class="resultPos">
+        <h2>Result:</h2>
+
+        <?php
+        echo "<div>".$_SESSION["dealer"]->result."</div>";
+        echo "<div>".$_SESSION["player"]->result."</div>";
+        ?>
+
+    </div>
+    
+    <div class="playerPos">
+        <h2 class="center">Player:</h2>
+        <div id="player" class="center">
+
+        <?php
+        // Method calls player where here
+        echo "<div>";
+        foreach($_SESSION["player"]->hand as $pkey => $value){
+            echo "<img src='assets/cards/".$pkey.".svg' alt='playingcard' height='120px'>";
+        };
+        echo "</div>";
+        ?>
+
+        </div>
+        <?php
+            echo "<div class='center'>";
+            echo "Player hand: ",$_SESSION["player"]->score;
+            echo "</div>";
+        ?>
+    </div>
+
+    <form method="post">
+        <input type="submit" value="Hit" name="hitPlayer">
+        <input type="submit" name="stand" value="Stand">
+        <input type="submit" name="surrender" value="surrender">
+        <input type="submit" name="deal" value="Deal again">
+    </form>
+
+    <form action="home.php" method="post">
+        <input type="submit" value="Go Back to Home" name="goBack">
+    </form>
+    <div style="display:flex; flex-direction:row">
+    
+    <?php
+    print_r($_SESSION["cards"]);
+    // echo "</br>";
+    echo "Cards left in the deck: ".count($_SESSION["cards"]);
+    if(isset($_POST["playGame"]) || isset($_POST["deal"])){ // Start: player gets 2 open cards
+        unset($_POST["playGame"]);
+        unset($_POST["deal"]);
+    }
+    if(isset($_POST["deal"])){
+        session_unset();
+    }
     ?>
     </div>
-    <div class="playField">
-        <!-- ***************    PLAYER AREA   *****************   -->
-        <div class="player" style="border: 2px solid black; overflow: auto;">
-            <p>Player</p>
-            <?php
-          if(isset($_POST["playGame"])){
-            for ($i=0;$i<2;$i++){
-                $_SESSION["playerScore"][] = $player->randomCard("playerScore");
-            }
-            print_r($_SESSION["playerScore"]);
-          }
-
-          if(isset($_POST["hitPlayer"])){
-            $_SESSION["playerScore"][] = $player->randomCard("playerScore");
-            print_r($_SESSION["playerScore"]);
-          }
-          
-          if (isset($_POST["stand"]) || isset($_POST["surrender"])){
-            print_r($_SESSION["playerScore"]);
-            var_dump( array_sum($_SESSION["playerScore"]));
-          }
-        ?>
-        </div>
-        <!-- ***************    AREA VOOR FUNCTIE HIT  (NOG AAN TE MAKEN ) ********** -->
-        <div class="hitPlayer">
-            <!-- ***************  AREA for Surrender and Stand ***************-->
-            <div class="player">
-                <?php 
-            ?>
-            </div>
-            <!-- ***************     FORM for buttons      ************* -->
-            <form method="post">
-                <input type="submit" value="Hit" name="hitPlayer">
-                <input type="submit" name="stand" value="Stand">
-                <input type="submit" name="surrender" value="surrender">
-            </form>
-        </div>
-
-        <!--  ***********************************************************************  -->
-
-        <!--  ******* BUTTON OM TERUG TE GAAN NAAR HOME.PHP ( DELETE NA TESTEN !!!!)  -->
-
-        <form action="home.php" method="post">
-            <input type="submit" value="Go Back to Home" name="playGame">
-        </form>
-
-<?php
- print_r($_SESSION["cards"]);
-?>
 
 </body>
-
 </html>
