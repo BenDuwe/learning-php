@@ -13,77 +13,63 @@ include 'blackj.php';
 </head>
 
 <body>
-    <h2 class="center" >Dealer:</h2>
-    <div id="dealer" class="dealerPos center">
-    <?php
-    if(isset($_POST["playGame"]) || isset($_POST["deal"])){ // Start: dealer gets two cards, 1 open, 1 closed.
-        $_SESSION["player"] = new Blackjack();
-        $_SESSION["dealer"] = new Blackjack();
-        createDeck(); // Deck is created in $_SESSION
-        $_SESSION["dealer"]->cardCheck();
-    } else if ($_POST["stand"]) {
-        $_SESSION["dealer"]->stand();
-    } else if ($_POST["surrender"]){
-        $_SESSION["dealer"]->surrender();
-    }
-    echo "<div>";
-    foreach($_SESSION["dealer"]->hand as $dkey => $value){
-        echo "<img src='../assets/cards/".$dkey.".svg' alt='playingcard' height='120px'>";
-    };
-    if(isset($_POST["playGame"]) || isset($_POST["deal"]) || isset($_POST["hitPlayer"])){
-        echo "<img src='../assets/cards/2B.svg' alt='playingcard' height='120px'>";
-    }
+    <div class="dealerPos" >
+        <h2 class="center" >Dealer:</h2>
+        <div id="dealer" class="center">
+        <?php
+        // method calls dealer where here.
+        echo "<div>";
+        foreach($_SESSION["dealer"]->hand as $dkey => $value){
+            echo "<img src='../assets/cards/".$dkey.".svg' alt='playingcard' height='120px'>";
+        };
+        if(isset($_POST["playGame"]) || isset($_POST["deal"]) || isset($_POST["hitPlayer"])){
+            echo "<img src='../assets/cards/2B.svg' alt='playingcard' height='120px'>";
+        }
 
-    echo "</div>";
-    if(isset($_POST["playGame"]) || isset($_POST["deal"])){    
-        $_SESSION["dealer"]->blindCard();
-    }
-    ?>
-    </div>
-
-    <?php
-        echo "<div class='center'>";
-        echo "Dealer hand: ",$_SESSION["dealer"]->score;
         echo "</div>";
-    ?>
+        if(isset($_POST["playGame"]) || isset($_POST["deal"])){    
+            $_SESSION["dealer"]->blindCard();
+        }
+        ?>
+        </div>
+
+        <?php
+            echo "<div class='center'>";
+            echo "Dealer hand: ",$_SESSION["dealer"]->score;
+            echo "</div>";
+        ?>
+    </div>
 
     <div id="result" class="resultPos">
         <h2>Result:</h2>
 
         <?php
         echo "<div>".$_SESSION["dealer"]->result."</div>";
-        echo "<div>".$_SESSION["player"]->result."</div>"
+        echo "<div>".$_SESSION["player"]->result."</div>";
         ?>
 
     </div>
+    
+    <div class="playerPos">
+        <h2 class="center">Player:</h2>
+        <div id="player" class="center">
 
-    <h2 class="center">Player:</h2>
-    <div id="player" class="playerPos center">
-
-    <?php
-    if(isset($_POST["playGame"]) || isset($_POST["deal"])){ // Start: player gets 2 open cards
-        for ($i=0; $i<2; $i++){
-            $_SESSION["player"]->cardCheck();
-        }
-        unset($_POST["playGame"]);
-        unset($_POST["deal"]);
-    } else if (isset($_POST["hitPlayer"])){
-        $_SESSION["player"]->cardCheck();
-        $_SESSION["player"]->hitScore();
-    }
-    echo "<div>";
-    foreach($_SESSION["player"]->hand as $pkey => $value){
-        echo "<img src='../assets/cards/".$pkey.".svg' alt='playingcard' height='120px'>";
-    };
-    echo "</div>";
-    ?>
-
-    </div>
-    <?php
-        echo "<div class='center'>";
-        echo "Player hand: ",$_SESSION["player"]->score;
+        <?php
+        // Method calls player where here
+        echo "<div>";
+        foreach($_SESSION["player"]->hand as $pkey => $value){
+            echo "<img src='../assets/cards/".$pkey.".svg' alt='playingcard' height='120px'>";
+        };
         echo "</div>";
-    ?>
+        ?>
+
+        </div>
+        <?php
+            echo "<div class='center'>";
+            echo "Player hand: ",$_SESSION["player"]->score;
+            echo "</div>";
+        ?>
+    </div>
 
     <form method="post">
         <input type="submit" value="Hit" name="hitPlayer">
@@ -99,8 +85,12 @@ include 'blackj.php';
     
     <?php
     print_r($_SESSION["cards"]);
-    echo "</br>";
+    // echo "</br>";
     echo "Cards left in the deck: ".count($_SESSION["cards"]);
+    if(isset($_POST["playGame"]) || isset($_POST["deal"])){ // Start: player gets 2 open cards
+        unset($_POST["playGame"]);
+        unset($_POST["deal"]);
+    }
     if(isset($_POST["deal"])){
         session_unset();
     }

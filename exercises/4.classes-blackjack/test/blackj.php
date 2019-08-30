@@ -66,9 +66,10 @@ class Blackjack{
 
     public function hitScore(){
         if(array_sum($this->hand)>21){
-            $this->result = " TO GREEDY! ";
-            header("Refresh:0");
+            $this->result = " TOO GREEDY! ";
+            // header("Refresh:0");
         };
+        return;
     }
 
     public function stand(){
@@ -102,4 +103,30 @@ class Blackjack{
 
 }
 /* ******************************************************************************* */
+
+/* ***************************** Method calls dealer ***************************** */
+if(isset($_POST["playGame"]) || isset($_POST["deal"])){ // Start: dealer gets two cards, 1 open, 1 closed.
+    $_SESSION["player"] = new Blackjack();
+    $_SESSION["dealer"] = new Blackjack();
+    createDeck(); // Deck is created in $_SESSION
+    $_SESSION["dealer"]->cardCheck();
+} else if ($_POST["stand"]) {
+    $_SESSION["dealer"]->stand();
+} else if ($_POST["surrender"]){
+    $_SESSION["dealer"]->surrender();
+}
+
+/* ***************************** Method calls player ***************************** */
+if(isset($_POST["playGame"]) || isset($_POST["deal"])){ // Start: player gets 2 open cards
+    for ($i=0; $i<2; $i++){
+        $_SESSION["player"]->cardCheck();
+    }
+    //unset($_POST["playGame"]);
+    //unset($_POST["deal"]);
+} else if (isset($_POST["hitPlayer"])){
+    $_SESSION["player"]->cardCheck();
+    $_SESSION["player"]->hitScore();
+}
+
+
 ?>
