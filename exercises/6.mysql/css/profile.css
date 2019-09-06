@@ -1,0 +1,63 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  background: #245060;
+  color: #fff;
+}
+body .header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .header h1 {
+  margin-left: 30px;
+}
+body .container {
+  display: flex;
+  flex-direction: row;
+  margin: 2.5% 5%;
+  padding: 2.5% 5%;
+  background: rgba(77, 119, 134, 0.267);
+}
+body .container .pic_container {
+  display: flex;
+  justify-content: center;
+  max-width: 200px;
+  overflow: hidden;
+  margin-right: 15px;
+}
+body .container .pic_container .pic {
+  padding: 3px;
+  border: 1px solid #949494;
+  background: #4d7786;
+}
+body .container .flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+body .container .flex .ident {
+  padding: 0 10px 0 0;
+}
+body .container .column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+body .container .column .pad {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 10px 10px 5px;
+}
+body .container .column .bill {
+  background: #4d7786;
+  height: auto;
+}
+
+/*# sourceMappingURL=profile.css.map */
