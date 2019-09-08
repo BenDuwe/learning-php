@@ -1,6 +1,13 @@
 <?php
 //include_once 'connection.php';
 include_once 'auth.php';
+
+// Check if the user is already logged in, if yes then redirect him to index page = table with all profiles
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+    header("location: index.php");
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -12,17 +19,20 @@ include_once 'auth.php';
     <title>Login Page</title>
 </head>
 <body>
-    <form action="insert.php" method="POST">
+    <form action="" method="POST">
         <div>
-            <label for="email">E-mail address:</label>
-            <input type="text" required name="email" id="email">
+            <label for="username">Username:</label>
+            <input type="text" required name="username" id="username">
+            <span><?php echo $user_err; ?></span>
         </div>
         <div>
             <label for="password">Password:</label>
             <input type="password" required name="password" id="password">
+            <span><?php echo $password_err; ?></span>
         </div>
+        <?php echo "<div>" . $login_err . "</div>"; ?>
         <div>
-            <input type="submit" name="submit" value="Login">
+            <input type="submit" name="login" value="Login">
         </div> 
     </form>
 

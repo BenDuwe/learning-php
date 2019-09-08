@@ -1,5 +1,10 @@
 <?php
-include 'connection.php';
+include 'auth.php';
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] !== true || !isset($_SESSION["loggedin"])){
+    header("location: login.php");
+    exit;
+}
+
 
 if (file_exists('connection.php')){
     $status = "yay!";
@@ -20,6 +25,9 @@ if (file_exists('connection.php')){
 <body>
 
     <section>
+        <form action="" method="POST">
+            <input type="submit" name="logout" value="Logout">
+        </form>
         <h2>Table:</h2>
         <div>
             <table cellpadding="0" cellspacing="0" border="1px solid">
@@ -28,8 +36,10 @@ if (file_exists('connection.php')){
                         <th style="width: 50px">id</th>
                         <th style="width: 150px">Name</th>
                         <th style="width: 250px">Email</th>
+                        <th style="width: 250px">Quote</th>
                         <th style="width: 150px">Preferred language</th>
-                        <th style="width: 150px">Profile pic</th>
+                        <!-- <th style="width: 150px">Profile pic</th>
+                        <th style="width: 150px">Password</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -57,15 +67,18 @@ if (file_exists('connection.php')){
                             <td style='width: 150px'>"
                                 . "<a href='profile.php?user=" . $row['id'] . "'>" . $row['first_name'] ." ". $row['last_name'] ."</a>" .
                             "</td>
-                            <td style='width: 250px'>" . $row['email'] . "</td>";
+                            <td style='width: 250px'>" . $row['email'] . "</td>
+                            <td style='width: 250px'>" . $row['quote'] . "</td>";
+
                     if ($lang !== "nl"){
                             echo "<td style='width: 150px'><img style='border: 1px solid' width='40px' src='assets/svg/" . $flag . "' alt='language flag'></td>";
                     } else {
                         echo "<td style='width: 150px'><img style='border: 1px solid' width='40px' src='assets/svg/" . $flag . "' alt='language flag'><span> /  </span><img style='border: 1px solid' width='40px' src='assets/svg/nl.svg' alt='language flag'></td>";
                     }
 
-                    echo    "<td style='width: 150px'><img style='border: 1px solid' height='80px' src='" . $row['avatar'] . "' alt='profile pic'></td>
-                        </tr>";  //$row['index'] the index here is a field name
+                    echo    /*"<td style='width: 150px'><img style='border: 1px solid' height='80px' src='" . $row['avatar'] .      "' alt='profile pic'></td>
+                        <td style='width: 150px'>" . $row['password'] . "</td>*/
+                        "</tr>";  //$row['index'] the index here is a field name
                     };
                 // echo "</table>"; //Close the table in HTML
 
@@ -94,6 +107,15 @@ if (file_exists('connection.php')){
             </tbody>
             </table>
         </div>
+        <?php
+        var_dump ($_SESSION["username"]);
+        if(isset($_SESSION["username"])){
+            echo "<div>Logged in as " . $_SESSION["username"] . ".</div>";
+        } else {
+            header("location: login.php");
+        }
+
+        ?>
     </section>
 
 

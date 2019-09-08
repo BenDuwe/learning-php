@@ -1,16 +1,16 @@
 <?php
-
+session_start();
 function openConnection() {
     
     // Try to figure out what these should be for you
-    // $dbhost    = "136.144.221.129";
-    // $dbuser    = "genk";
-    // $dbpass    = "{)+O^O@iw!].zmjT";
-    // $db        = "becode_genk";
-    $dbhost    = "localhost";
-    $dbuser    = "becode_DB";
-    $dbpass    = "becodeTesting1!";
+    $dbhost    = "136.144.221.129";
+    $dbuser    = "genk";
+    $dbpass    = "{)+O^O@iw!].zmjT";
     $db        = "becode_genk";
+    // $dbhost    = "localhost";
+    // $dbuser    = "becode_DB";
+    // $dbpass    = "becodeTesting1!";
+    // $db        = "becode_genk";
     
     // Try to understand what happens here 
     $conn = new mysqli($dbhost, $dbuser, $dbpass,$db)// create new object using mysqli class

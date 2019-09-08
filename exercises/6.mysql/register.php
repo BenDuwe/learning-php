@@ -85,7 +85,7 @@ include_once 'auth.php';
             <input type="text" required name="author" id="author" value="<?php if (isset($quoteAuth)) echo $quoteAuth; ?>">
         </div>
         <div>
-            <input type="submit" name="submit" value="Submit form">
+            <input type="submit" name="register" value="Register">
         </div> 
     </form>
 
