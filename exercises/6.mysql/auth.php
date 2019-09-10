@@ -185,7 +185,20 @@ if(isset($_POST["login"])){
                                 
                                 // Redirect user to welcome page
                                 header("location: index.php");
-                            } else{
+                            } else if(md5($logpassword) === $password){
+                                // Password is correct, so start a new session
+                                //session_start();
+                                
+                                // Store data in session variables
+                                $_SESSION["loggedin"] = true;
+                                $_SESSION["id"] = $id;
+                                $_SESSION["username"] = $loguser;                            
+                                
+                                // Redirect user to welcome page
+                                header("location: index.php");
+
+                                
+                            } else {
                                 // Display an error message if password is not valid
                                 $login_err = "Username and/or password does not exist. Please try again.";
                             }

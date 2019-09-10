@@ -60,7 +60,7 @@ if (file_exists('connection.php')){
                     } else {
                         $flag = "be.svg";
                     };
-
+/* Way to much inline styling here, I know. Still has to be replaced with classes and a stylesheet */
                     echo
                         "<tr>
                             <td style='width: 50px'>" . $row['id'] . "</td>
