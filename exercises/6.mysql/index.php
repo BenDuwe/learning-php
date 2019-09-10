@@ -38,8 +38,8 @@ if (file_exists('connection.php')){
                         <th style="width: 250px">Email</th>
                         <th style="width: 250px">Quote</th>
                         <th style="width: 150px">Preferred language</th>
-                        <!-- <th style="width: 150px">Profile pic</th>
-                        <th style="width: 150px">Password</th> -->
+                        <th style="width: 150px">Profile pic</th>
+                        <th>Password</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,8 +76,8 @@ if (file_exists('connection.php')){
                         echo "<td style='width: 150px'><img style='border: 1px solid' width='40px' src='assets/svg/" . $flag . "' alt='language flag'><span> /  </span><img style='border: 1px solid' width='40px' src='assets/svg/nl.svg' alt='language flag'></td>";
                     }
 
-                    echo    /*"<td style='width: 150px'><img style='border: 1px solid' height='80px' src='" . $row['avatar'] .      "' alt='profile pic'></td>
-                        <td style='width: 150px'>" . $row['password'] . "</td>*/
+                    echo    "<td style='width: 150px'><img style='border: 1px solid' height='80px' src='" . $row['avatar'] .      "' alt='profile pic'></td>
+                        <td style='font-size: 8px'>" . $row['password'] . "</td>" . 
                         "</tr>";  //$row['index'] the index here is a field name
                     };
                 // echo "</table>"; //Close the table in HTML
@@ -108,7 +108,6 @@ if (file_exists('connection.php')){
             </table>
         </div>
         <?php
-        var_dump ($_SESSION["username"]);
         if(isset($_SESSION["username"])){
             echo "<div>Logged in as " . $_SESSION["username"] . ".</div>";
         } else {

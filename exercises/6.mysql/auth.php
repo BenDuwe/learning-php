@@ -2,9 +2,6 @@
 include_once 'connection.php';
 
 
-
-
-
 /* ****************************************FORM VALIDATION ********************************************** */
 /* ****************************************************************************************************** */
 
@@ -84,13 +81,14 @@ if(isset($_POST["register"])){
         $favQuote = validate($_POST['quote']);
 
         $quoteAuth = validate($_POST['author']);
-/* ****************************************************************************************************** */
-/* ****************************************************************************************************** */
-        if(isset($error)){
+        if(isset($error) === true){
             return;
-        } else {
+/* ****************************************************************************************************** */
+/* ****************************************************************************************************** */
+
 /* *************************************** SENDING DATA TO DATABASE ************************************* */
 /* ****************************************************************************************************** */
+        } else {
         $status = "yay, connection might be possible!";
         $conn = openConnection();
 
@@ -119,13 +117,8 @@ if(isset($_POST["register"])){
 
 /* ****************************************************************************************************** */
 /* ****************************************************************************************************** */
-
-        // $data .= mysqli_query($conn, "SELECT * FROM hopper_2 WHERE id=LAST_INSERT_ID()");
-        // var_dump($data);
-        // $row = mysqli_fetch_row($data);
-        // var_dump($row);
-
         closeConnection($conn);
+/* *******************************************Loading registered profile page**************************** */
         header("Location: profile.php?user=$last_id");
         }
     } else {
@@ -226,5 +219,61 @@ if(isset($_POST["logout"])){
     unset($_SESSION["id"]);
     unset($_SESSION["username"]);                            
 }
+
+/* **************************************************** EDIT ******************************************** */
+/* ****************************************************************************************************** */
+if(isset($_POST['save'])){
+    $id = $_GET['user'];
+
+    /* validation has to be added still!!! */
+
+    $conn = openConnection();
+    // Escape user inputs for security
+    $first_name = $conn->real_escape_string($_REQUEST['firstname']);
+    $last_name = $conn->real_escape_string($_REQUEST['lastname']);
+    //$username = $conn->real_escape_string($_REQUEST['username']);
+    //$pass = password_hash($_REQUEST['password'], PASSWORD_DEFAULT);
+    $linkedin = $conn->real_escape_string($_REQUEST['linkedin']);
+    $github = $conn->real_escape_string($_REQUEST['github']);
+    $email = $conn->real_escape_string($_REQUEST['email']);
+    $language = $conn->real_escape_string($_REQUEST['language']);
+    //$avatar = $conn->real_escape_string($_REQUEST['avatar']);
+    $video = $conn->real_escape_string($_REQUEST['video']);
+    $quote = $conn->real_escape_string($_REQUEST['quote']);
+    $author = $conn->real_escape_string($_REQUEST['author']);
+
+    $data = "UPDATE hopper_2 SET first_name='$first_name', last_name='$last_name', linkedin='$linkedin', github='$github', email='$email', preferred_language='$language', video='$video', quote='$quote', quote_author='$author' WHERE id=$id";
+    if($conn->query($data) === true){
+        $update = "Edit saved successfully";
+    } else{
+        $update = "ERROR: Was not able to execute $data. " . $conn->error;
+    }
+
+    closeConnection($conn);
+    $edit = "";
+    //unset($_POST['edit']);
+}
+
+/* *************************************************** DELETE ******************************************* */
+/* ****************************************************************************************************** */
+
+if(isset($_POST['yes'])){
+    if ($_SESSION["id"] == $_GET['user']){
+        $id= $_GET['user'];
+        $conn = openConnection();
+
+        $sql = "DELETE FROM hopper_2 WHERE ID=$id"; 
+        if(mysqli_query($conn, $sql)){
+            unset($_SESSION["loggedin"]);
+            unset($_SESSION["id"]);
+            unset($_SESSION["username"]);        
+            header("location: register.php");
+        } else { 
+            echo "ERROR: Was not able to execute $sql. " . mysqli_error($conn); 
+        }
+        closeConnection($conn);
+    }
+}
+
 
 ?>

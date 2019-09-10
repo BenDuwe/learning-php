@@ -1,5 +1,7 @@
 <?php
-include 'connection.php';
+include_once 'auth.php';
+
+echo $_SESSION['edit'];
 
 if(isset($_GET['user']))
   $id = $_GET['user'];  
@@ -31,33 +33,84 @@ $flag = $lang.".svg";
 </head>
 <body>
     <section class="header">
-        <img height="150px" src="https://my.becode.org/assets/background/becodeseal.png" alt="BeCode Logo">
-        <h1>Student Profiles</h1>
+        <div class="title">
+            <img height="150px" src="https://my.becode.org/assets/background/becodeseal.png" alt="BeCode Logo">
+            <h1>Student Profiles</h1>
+        </div>
+        <?php
+        if(isset($_SESSION["username"])){
+            echo 
+                "<div>
+                    <div>Logged in as " . $_SESSION["username"] . "</div>
+                    <form method='POST'>   
+                        <input type='submit' name='logout' value='logout'/>
+                    </form>
+                </div>";
+        } else {
+            echo 
+                "<div>You are not logged in. <a href='login.php'>Login</a></div>";
+;
+        }
+
+        ?>
     </section>
     <section class="container">
         <div class="pic_container">
+            <h2 class="ident user"><?= $row['username']; ?></h2>
             <img class="pic" src="<?= $row['avatar']; ?>" alt="Profile picture" height="200px">
+            <?php
+
+            if ($_SESSION["id"] == $row['id']){
+                echo
+                    '<form action="" method="POST">
+                        <input type="submit" name="edit" value="Edit Profile">
+                        <input type="submit" name="delete" value="Delete profile">
+                    </form>';
+                }
+            echo "<div>".$update."</div>";
+            ?>
+            <!-- <form action="" method="POST">
+                <input type="submit" name="edit" value="Edit Profile">
+                <input type="submit" name="delete" value="Delete profile">
+            </form> -->
         </div>
         <div class="column">
-            <div class="pad flex ">
-                <h2 class="ident user"><?= $row['username']; ?></h2>
-                <form action="" method="POST">
-                    <input type="text" class="ident name" value="<?= $row['first_name']." ". $row['last_name']; ?>">
-                </form>
-            </div>
-            <div class="pad lang"><h4>Language: </h4> <?= "<img style='border: 1px solid' width='40px' src='assets/svg/" . $flag . "' alt='language flag'>" ?></div>
-            <div class="pad email"><h4>Email-address: </h4> <?= $row['email']; ?></div>
-            <div class="pad linked"><h4>LinkedIn: </h4> <a href="<?= $row['linkedin']; ?>"><?= $row['linkedin']; ?></a></div>
-            <div class="pad Git"><h4>GitHub: </h4> <a href="<?= $row['github']; ?>"><?= $row['github']; ?></a></div>
-            <div class="pad vid"><h4>Video: </h4> <a href="<?= $row['video']; ?>"><?= $row['video']; ?></a></div>
-            <div class="wisdom">
-                <div class="pad quote"><h4>Favourite quote: </h4><?= $row['quote']; ?></div>
-                <div class="pad author"><h4>Author: </h4><?= $row['quote_author']; ?></div>
-            </div>
-            <div class="pad bill">
-                <?= "<img height='360px' src='https://belikebill.ga/billgen-API.php?default=1&name=" . $row['first_name'] . "&sex=m' />"?>
-            </div>
+        <?php
+        // include 'profiletempl.php';
+        if (isset($_POST['edit'])){
+            if ($_SESSION["id"] == $_GET['user']){
+                $edit = "editing";
+            }
+        }
 
+        if(isset($_POST['delete'])){
+            if ($_SESSION["id"] == $_GET['user']){
+             echo 
+                 "<div class='alert'>
+                     <div> Are you sure you want to delete your profile?</div>
+                     <form method='POST'>
+                         <input type='submit' name='yes' value='Confirm'/>
+                         <input type='submit' name='cancel' value='Cancel'/>
+                     </form>
+                 </div>";
+            } else {
+                echo 
+                    "<div class='alert'>
+                        <div> You are not allowed to delete this profile.</div>
+                        <form method='POST'>
+                            <input type='submit' name='back' value='Back'/>
+                        </form>
+                    </div>";
+            }
+        }
+
+        if ($edit == ''){
+            include 'profiletempl.php';
+        } else {
+                include 'profileedit.php';
+        }
+
+        ?>
         </div>
     </section>
 </body>
