@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-12 text-center">
                     <h1>Welcome to the Javascript - PHP exercise</h1>
-                    <p>This is the result of the exercise. Please refresh the page and scroll down to see the effects in action. The HTML with javascript example can be found in the exercise-resources map on GitHub.</p>
+                    <p>This is the result of the exercise. Please refresh the page and scroll down to see the effects in action. The HTML with javascript example can be found in the exercise-resources map on <a href="https://github.com/BenDuwe/learning-php/tree/master/exercises/1.javascript-to-php">GitHub</a>.</p>
                     <p style="font-size:8rem"><i class="fas fa-angle-down"></i></p>
                 </div>
             </div>
